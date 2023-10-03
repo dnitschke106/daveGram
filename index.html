@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DaveGram Site</title>
+
+    <style>
+        body{text-align: center; background-color: black; color:aliceblue}
+
+        button {
+            position: center;
+            top: 50%;
+            background-color: yellow;
+        }
+
+        #findDetailsUser1{float: left; width: 50%; }
+        #findDetailsUser2{float: right; width: 50%; }
+    </style>
+
+</head>
+<body>
+    <img src="banner.png" alt="Banner" width="1520" height="450">
+    <br> <br> 
+
+    <div class="container">
+        <button id="displayInfoBTN">SHOW PROFILES</button>
+    </div>
+
+    <div id="findDetailsUser1"> 
+    
+        <h1 id="findName1" type="text"> </h1> <br> 
+        <img id="findImage1" src="" alt=""> 
+        <h2 id="findHometown1" type="text"> </h2> <br> 
+        <h2 id="findSchool1" type="text"> </h2> <br> 
+        <h3 id="findBio1" type="text"> </h3> <br> 
+
+    </div>
+
+    <div id="findDetailsUser2"> 
+        
+        <h1 id="findName2" type="text"> </h1> <br> 
+        <img id="findImage2" src="" alt=""> 
+        <h2 id="findHometown2" type="text"> </h2> <br> 
+        <h2 id="findSchool2" type="text"> </h2> <br> 
+        <h3 id="findBio2" type="text"> </h3> <br> 
+
+    </div>
+    <br> <hr> <br> <br> 
+    <iframe src="https://thunkable.site/w/Vf5oZrhSGVPzp5YjLVNKx" title="DaveGram" height = 1000 width = 500></iframe>
+
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyDlTZsYfXNP2-D3RH3JzgJ9-U_vcFpcYl4",
+          authDomain: "profileapp-4cde0.firebaseapp.com",
+          databaseURL: "https://profileapp-4cde0-default-rtdb.firebaseio.com",
+          projectId: "profileapp-4cde0",
+          storageBucket: "profileapp-4cde0.appspot.com",
+          messagingSenderId: "1055155890873",
+          appId: "1:1055155890873:web:dfcd3451d0e301212d8968",
+          measurementId: "G-KCYZJ0NE13"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+
+        import {getDatabase, get, ref, child}
+        from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js"
+
+        const db = getDatabase(); 
+
+        var findName1 = document.querySelector("#findName1");
+        var findName2 = document.querySelector("#findName2");
+
+        var findImage1 = document.querySelector("#findImage1");
+        var findImage2 = document.querySelector("#findImage2");
+
+        var findHometown1 = document.querySelector("#findHometown1");
+        var findHometown2 = document.querySelector("#findHometown2");
+
+        var findSchool1 = document.querySelector("#findSchool1");
+        var findSchool2 = document.querySelector("#findSchool2");
+
+        var findBio1 = document.querySelector("#findBio1");
+        var findBio2 = document.querySelector("#findBio2");
+
+        function FindData(){
+            const dbref = ref(db);
+            
+            get(child(dbref, "null/"))
+            .then((snapshot)=>{
+                if(snapshot.exists()){
+                    findName1.innerHTML = "Name: " + snapshot.val().name; 
+                    findImage1.src = snapshot.val().image; 
+                    findHometown1.innerHTML = "Hometown: " + snapshot.val().hometown; 
+                    findSchool1.innerHTML = "School: " + snapshot.val().school;
+                    findBio1.innerHTML = "Bio: " + snapshot.val().bio;
+                } else {"No Data Found"}
+            })
+
+            get(child(dbref, "oKqbLZLdYpfNhGustZjeLqlGvk33/"))
+            .then((snapshot)=>{
+                if(snapshot.exists()){
+                    findName2.innerHTML = "Name: " + snapshot.val().name; 
+                    findImage2.src = snapshot.val().image; 
+                    findHometown2.innerHTML = "Hometown: " + snapshot.val().hometown; 
+                    findSchool2.innerHTML = "School: " + snapshot.val().school;
+                    findBio2.innerHTML = "Bio: " + snapshot.val().bio;
+                } else {"No Data Found"}
+            })
+
+            .catch((error)=>{
+                alert(error)
+            })
+        }
+
+        displayInfoBTN.addEventListener('click', FindData); 
+
+      </script>
+  
+</body>
+</html>
